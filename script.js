@@ -9,7 +9,8 @@ $(function () {
   currentDay.text(rightNow);
   console.log(currentHour);
   for( var i = 0; i < containerEL.children().length; i++){
-    console.log(containerEL.children(i).getAttribute('id'));
+    console.log(containerEL.children().eq(i).getAttribute('id'));
+
   }
 
   
