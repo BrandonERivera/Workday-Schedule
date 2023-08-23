@@ -1,36 +1,70 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
-var currentDay = $('#currentDay')
-var currentHour = dayjs().hour()
-var containerEL = $('.containerEL')
 $(function () {
+  var currentDay = $('#currentDay')
+  var currentHour = dayjs().hour()
+  var containerEL = $('.containerEL')
+  var eventsEL = $('.time-block')
+  var savingEL = $('.saveBtn')
   var rightNow = dayjs().format('dddd, MMM DD');
-  currentDay.text(rightNow);
-  console.log(currentHour);
   for( var i = 0; i < containerEL.children().length; i++){
-    console.log(containerEL.children().eq(i).getAttribute('id'));
+    var divhour = containerEL.children().eq(i).attr('id');
+    if(divhour < "hour-"+ currentHour){
+      containerEL.children().eq(i).addClass('past')
+    }
+    else if (divhour == "hour-"+ currentHour){
+      containerEL.children().eq(i).addClass('present')
+    }
+    else{
+      containerEL.children().eq(i).addClass('future')
+    }
+
 
   }
 
-  
+  savingEL.on('click', HandleSaveform)
 
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  //
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
+  function HandleSaveform(){
+    var scheduledevents = JSON.parse(localStorage.getItem("scheduledevents")) || []
+    Thiselid = $(this).parent().attr('id')
+    descriptionel = $(this).parent().children().eq(1).val()
+
+    var scheduling = {
+      id: Thiselid,
+      description: descriptionel
+    };
+    if(scheduledevents.length != 0)
+    {
+      for( var i = 0; i < scheduledevents.length; i++)
+     {
+        if(scheduledevents[i].id == scheduling.id)
+        {
+         scheduledevents[i].description = scheduling.description;
+         savescheduledevents(scheduledevents);   
+         console.log(scheduledevents[i].id);
+         return;
+        }
+        else if( i == scheduledevents.length-1 && scheduledevents[i].id != scheduling.id)
+        {
+          scheduledevents.push(scheduling);
+          savescheduledevents(scheduledevents);
+
+        }
+      }
+    }
+    else
+    {
+      scheduledevents.push(scheduling);
+      savescheduledevents(scheduledevents);
+    }
+
+  }
+  function savescheduledevents(scheduledevents) {
+    localStorage.setItem('scheduledevents', JSON.stringify(scheduledevents));
+  }
   //
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
-  //
-  // TODO: Add code to display the current date in the header of the page.
 });
