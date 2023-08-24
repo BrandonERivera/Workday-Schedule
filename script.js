@@ -98,10 +98,8 @@ $(function () {
         if(scheduledevents[j].id == divhour)
         {
           //its suppose to replace the text with the descriptions however describ[j].text does not work still trying to figure that out
-          console.log(scheduledevents[j].description)
-          describ.text(scheduledevents[j].description)
+          //describ[i].text(scheduledevents[j].description)
         }
-
       }
     }
   }
