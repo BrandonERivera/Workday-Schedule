@@ -34,6 +34,6 @@ THEN the saved events persist
 This Work Day Scheduler is here to show the usage of Day.js and jquery. It is used as both an application to help with day timing but also help understand the usage of third party api's.
 
 ## Link
-
+https://brandonerivera.github.io/Workday-Schedule/
 ## Screenshots
 ![images](./Screenshot/WorkdayScheduler.png)
