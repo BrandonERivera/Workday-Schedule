@@ -3,6 +3,7 @@
 // in the html.
 $(function () {
   //declaring variables for elements
+  var scheduledevents = [];
   var containerEL = $('.containerEL')
   var savingEL = $('.saveBtn')
   var describ = $('.description')
@@ -41,7 +42,7 @@ $(function () {
   //saves the form in localstorage
   function HandleSaveform(){
     //creates the localstorage array, then gets the id and the text value and puts it in scheduling object
-    var scheduledevents = JSON.parse(localStorage.getItem("scheduledevents")) || []
+    scheduledevents = JSON.parse(localStorage.getItem("scheduledevents"))
     Thiselid = $(this).parent().attr('id')
     descriptionel = $(this).parent().children().eq(1).val()
 
@@ -98,7 +99,7 @@ $(function () {
         if(scheduledevents[j].id == divhour)
         {
           //its suppose to replace the text with the descriptions however describ[j].text does not work still trying to figure that out
-          //describ[i].text(scheduledevents[j].description)
+          describ[i].text(scheduledevents[j].describ)
         }
       }
     }
